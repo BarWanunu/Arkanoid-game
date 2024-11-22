@@ -1,0 +1,408 @@
+// Bar Wanunu 209422435
+
+package Game;
+
+import CollidableObjects.Ball;
+import CollidableObjects.BallRemover;
+import CollidableObjects.Block;
+import CollidableObjects.BlockRemover;
+import CollidableObjects.Paddle;
+import Collision.GameEnvironment;
+import Collision.SpriteCollection;
+import Decorations.DirectHitDeco;
+import Decorations.LevelName;
+import Decorations.TheBossLevelDeco;
+import Decorations.WideEasyDeco;
+import GameAddsOn.AnimationRunner;
+import GameAddsOn.CountDownAnimation;
+import Screens.KeyPressStoppableAnimation;
+import Screens.PauseScreen;
+import GameAddsOn.ScoreIndicator;
+import GameAddsOn.ScoreTrackingListener;
+import Geometry.Counter;
+import Geometry.Point;
+import Geometry.Rectangle;
+import Geometry.Velocity;
+import Interfaces.Animation;
+import Interfaces.Collidable;
+import Interfaces.LevelInformation;
+import Interfaces.Sprite;
+import biuoop.DrawSurface;
+import biuoop.GUI;
+import biuoop.KeyboardSensor;
+
+import java.awt.Color;
+
+/**
+ * GameLevel class - contains the GameLevel constructor and methods and
+ * implements the Animation interface.
+ */
+public class GameLevel
+        implements Animation {
+
+    //defining magic numbers
+
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
+    private static final int BLOCK_SIZE = 25;
+    private static final int LEVEL_POINTS = 100;
+
+    // Members
+
+    private SpriteCollection sprites;
+    private GameEnvironment game;
+    private Counter counterBlocks;
+    private BlockRemover blockRemover;
+    private Counter counterBalls;
+    private BallRemover ballRemover;
+    private AnimationRunner runner;
+    private boolean running;
+    private KeyboardSensor keyboard;
+    private ScoreIndicator scoreIndicator;
+    private LevelInformation levelInformation;
+    private Counter score;
+    private ScoreTrackingListener scoreTrack;
+    private GUI gui;
+
+    // Constructor
+
+    /**
+     * Creates a new game.
+     *
+     * @param levelInformation - the level we want to play
+     * @param keyboardSensor   - a keyboard sensor
+     * @param animationRunner  - an animation runner
+     * @param score            - the score
+     * @param gui              - a gui
+     */
+    public GameLevel(LevelInformation levelInformation, KeyboardSensor
+            keyboardSensor, AnimationRunner animationRunner, Counter score,
+                     GUI gui) {
+        this.sprites = new SpriteCollection();
+        this.game = new GameEnvironment();
+        this.counterBlocks = new Counter();
+        this.blockRemover = new BlockRemover(this, this.counterBlocks);
+        this.counterBalls = new Counter();
+        this.ballRemover = new BallRemover(this, this.counterBalls);
+        this.score = score;
+        this.scoreTrack = new ScoreTrackingListener(this.score);
+        this.runner = animationRunner;
+        this.keyboard = keyboardSensor;
+        this.scoreIndicator = new ScoreIndicator(this.score);
+        this.levelInformation = levelInformation;
+        this.gui = gui;
+    }
+
+    // Methods
+
+    /**
+     * The methods add a sprite to the sprites list.
+     *
+     * @param s - an Interfaces.Sprite object
+     */
+    public void addSprite(Sprite s) {
+        this.sprites.addSprite(s);
+    }
+
+    /**
+     * The method add a collidable to the collidable list.
+     *
+     * @param c - an Interfaces.Collidable object
+     */
+    public void addCollidable(Collidable c) {
+        this.game.addCollidable(c);
+    }
+
+    /**
+     * The method creates the death region block (bottom of the drawsurface)
+     * and adds it to the game.
+     */
+    private void createDeathRegion() {
+        // the rectangle that is the bottom boundary
+        Rectangle bottom = new Rectangle(new Point(BLOCK_SIZE,
+                HEIGHT - 2), WIDTH - 2 * BLOCK_SIZE, BLOCK_SIZE);
+        Block temp = (Block) this.levelInformation.getBackground();
+        Block down = new Block(bottom, temp.getColor());
+        down.addToGame(this);
+    }
+
+    /**
+     * The method creates the boundaries blocks for the surface.
+     */
+    private void surfaceBoundaries() {
+        Block surface = (Block) this.levelInformation.getBackground();
+        surface.addToGame(this);
+        // the rectangle that is the top boundary
+        Rectangle top = new Rectangle(new Point(0, 0), WIDTH, BLOCK_SIZE);
+        Block up = new Block(top, Color.WHITE);
+        up.addToGame(this);
+        // the rectangle that is the left boundary
+        Rectangle left = new Rectangle(new Point(0, BLOCK_SIZE), BLOCK_SIZE,
+                HEIGHT - BLOCK_SIZE);
+        Block left1 = new Block(left, Color.WHITE);
+        left1.addToGame(this);
+        // the rectangle that is the right boundary
+        Rectangle right = new Rectangle(new Point(WIDTH - BLOCK_SIZE,
+                BLOCK_SIZE), BLOCK_SIZE, HEIGHT - BLOCK_SIZE);
+        Block right1 = new Block(right, Color.WHITE);
+        right1.addToGame(this);
+    }
+
+    /**
+     * The method creates balls for the game depends on the level.
+     */
+    private void ballsCreator() {
+        // checking the level by the levelInformation levelName
+        if (this.levelInformation.levelName().equals("Direct Hit")) {
+            for (Velocity v : this.levelInformation.initialBallVelocities()) {
+                Ball ball = new Ball(new Point(415, 570), 5, Color.white,
+                        this.game);
+                // setting the width and height for the ball
+                ball.setWidth(WIDTH);
+                ball.setHeight(HEIGHT);
+                // setting the velocity for the ball with the value of v
+                ball.setVelocity(v);
+                // adding the ball to the game
+                ball.addToGame(this);
+                ball.addHitListener(this.ballRemover);
+            }
+        }
+        if (this.levelInformation.levelName().equals("Wide Easy")) {
+            for (int i = 0; i < 10; i++) {
+                Ball ball = new Ball(new Point(410, 570), 5, Color.black,
+                        this.game);
+                // setting the width and height for the ball
+                ball.setWidth(WIDTH);
+                ball.setHeight(HEIGHT);
+                // setting the velocity for the ball with the value of v
+                ball.setVelocity(this.levelInformation.initialBallVelocities()
+                        .get(i));
+                // adding the ball to the game
+                ball.addToGame(this);
+                ball.addHitListener(this.ballRemover);
+            }
+        }
+        if (this.levelInformation.levelName().equals("The Boss Level")) {
+            // initial x value for the balls
+            for (Velocity v : this.levelInformation.initialBallVelocities()) {
+                Ball ball = new Ball(new Point(410, 570),
+                        5, Color.white, this.game);
+                //setting the width and height for the ball
+                ball.setWidth(WIDTH);
+                ball.setHeight(HEIGHT);
+                // setting the velocity for the ball with the value of v
+                ball.setVelocity(v);
+                // adding the ball to the game
+                ball.addToGame(this);
+                ball.addHitListener(this.ballRemover);
+            }
+        }
+    }
+
+    /**
+     * The method creates the paddle for the game.
+     */
+    private void paddleCreator() {
+        // creating the paddle
+        if (!this.levelInformation.levelName().equals("Wide Easy")) {
+            Rectangle pad = new Rectangle(new Point(360, HEIGHT - 22),
+                    this.levelInformation.paddleWidth(), 20);
+            Paddle paddle = new Paddle(pad, this.keyboard, Color.yellow,
+                    this.levelInformation.paddleSpeed());
+            // adding the paddle to the game
+            paddle.addToGame(this);
+        } else {
+            Rectangle pad = new Rectangle(new Point(100, HEIGHT - 22),
+                    this.levelInformation.paddleWidth(), 20);
+            Paddle paddle = new Paddle(pad, this.keyboard, Color.yellow,
+                    this.levelInformation.paddleSpeed());
+            paddle.addToGame(this);
+        }
+    }
+
+    /**
+     * Creating the score board.
+     */
+    private void scoreBoardCreator() {
+        Rectangle r = new Rectangle(new Point(0, 0), 800, BLOCK_SIZE);
+        Block b = new Block(r, Color.WHITE);
+        b.addToGame(this);
+    }
+
+    /**
+     * The method creates the blocks for the game.
+     */
+    private void createBlocks() {
+        for (Block b : this.levelInformation.blocks()) {
+            // adding the blocks for the game
+            b.addToGame(this);
+            b.addHitListener(this.blockRemover);
+            b.addHitListener(this.scoreTrack);
+        }
+    }
+
+    /**
+     * The method returns the amount of blocks in the game.
+     *
+     * @return - amount of blocks in the game
+     */
+    public int remainingBlocks() {
+        /*
+         * returning the size of the Collidable list minus the paddle and the
+         * boundaries
+         */
+        return this.game.sizeOfGame() - 7;
+    }
+
+    /**
+     * The method returns the number of balls in the game. The ball is the
+     * only object that is not a collidable so the number of balls is exactly
+     * the number of sprites minus collidables, the score indicator, the
+     * deco for each level and the level name.
+     *
+     * @return - number of balls
+     */
+    public int remainingBalls() {
+        return this.sprites.sizeOfSprites() - this.game.sizeOfGame() - 3;
+    }
+
+    /**
+     * The method removes a sprite object from the sprite collection list.
+     *
+     * @param s - the sprite wee want to remove
+     */
+    public void removeSprite(Sprite s) {
+        this.sprites.getSprites().remove(s);
+    }
+
+    /**
+     * The method removes a collidable object from the game environment list.
+     *
+     * @param c - the collidable we want to remove
+     */
+    public void removeCollidable(Collidable c) {
+        this.game.getCollidables().remove(c);
+    }
+
+    /**
+     * The method draws all the extra decoration for level 1 on the surface.
+     */
+    public void levelOneDrawings() {
+        DirectHitDeco deco = new DirectHitDeco();
+        deco.addToGame(this);
+    }
+
+    /**
+     * The method draws all the extra decoration for level 2 on the surface.
+     */
+    public void levelTwoDrawings() {
+        WideEasyDeco deco = new WideEasyDeco();
+        deco.addToGame(this);
+    }
+
+    /**
+     * The method draws all the extra decoration for level 3 on the surface.
+     */
+    public void levelThreeDrawings() {
+        TheBossLevelDeco deco = new TheBossLevelDeco();
+        deco.addToGame(this);
+    }
+
+    /**
+     * The method creates the level name that will be displayed in the game.
+     */
+    public void levelNameDisplay() {
+        LevelName levelName = new LevelName(this.levelInformation);
+        levelName.addToGame(this);
+    }
+
+    /**
+     * The initialize method creates all the game environment and sprites. The
+     * method creates the boundaries of the surface and all the blocks. After
+     * that we initialize the balls for the game, the paddle, the score board
+     * the death region and initialize the counter for blocks and balls.
+     */
+    public void initialize() {
+        // creating the surface boundaries
+        this.surfaceBoundaries();
+        // creating the blocks of the game
+        this.createBlocks();
+        // creating the decorations based on the level name
+        if (this.levelInformation.levelName().equals("Direct Hit")) {
+            this.levelOneDrawings();
+        } else if (this.levelInformation.levelName().equals("Wide Easy")) {
+            this.levelTwoDrawings();
+        } else if (this.levelInformation.levelName().equals("The Boss Level")) {
+            this.levelThreeDrawings();
+        }
+        // creating the balls of the game
+        this.ballsCreator();
+        // creating the paddle for the game
+        this.paddleCreator();
+        // creating the score board of the game
+        this.scoreBoardCreator();
+        // creating the score indicator of the game
+        this.scoreIndicator.addToGame(this);
+        // creates the level name
+        this.levelNameDisplay();
+        // creating the death region
+        this.createDeathRegion();
+        // increasing the blocks counter by the amount of blocks
+        this.counterBlocks.increase(this.remainingBlocks());
+        // increasing the balls counter by the amount of balls
+        this.counterBalls.increase(this.remainingBalls());
+    }
+
+    /**
+     * The run method runs the game.
+     */
+    public void run() {
+        // counting down before the start of the game
+        if (this.levelInformation.levelName().equals("Direct Hit")) {
+            this.runner.run(new CountDownAnimation(2, 3,
+                    this.sprites, Color.WHITE));
+        }
+        if (this.levelInformation.levelName().equals("Wide Easy")) {
+            this.runner.run(new CountDownAnimation(2, 3, this.sprites,
+                    Color.BLACK));
+        }
+        if (this.levelInformation.levelName().equals("The Boss Level")) {
+            this.runner.run(new CountDownAnimation(2, 3, this.sprites,
+                    Color.black));
+        }
+        this.running = true;
+        this.runner.run(this);
+    }
+
+    @Override public void doOneFrame(DrawSurface d) {
+        biuoop.Sleeper sleeper = new biuoop.Sleeper();
+        this.sprites.drawAllOn(d);
+        this.sprites.notifyAllTimePassed();
+        if (this.counterBlocks.getValue() == 0) {
+            // if there's no more blocks in the game
+            this.score.increase(LEVEL_POINTS);
+            // showing the score after the 100 points addition
+            this.sprites.drawAllOn(d);
+            this.gui.show(d);
+            this.running = false;
+            sleeper.sleepFor(1000);
+            return;
+        }
+
+        if (this.counterBalls.getValue() == 0) {
+            // if there's no more balls in the game
+            sleeper.sleepFor(1000);
+            this.running = false;
+            return;
+        }
+        if (this.keyboard.isPressed("p")) {
+            // creating the pause screen in case of pressing p
+            this.runner.run(new KeyPressStoppableAnimation(this.keyboard,
+                    KeyboardSensor.SPACE_KEY, new PauseScreen()));
+        }
+    }
+
+    @Override public boolean shouldStop() {
+        return !this.running;
+    }
+}

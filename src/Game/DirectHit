@@ -1,0 +1,61 @@
+// Bar Wanunu 209422435
+
+package Game;
+
+import CollidableObjects.Block;
+import Geometry.Point;
+import Geometry.Rectangle;
+import Geometry.Velocity;
+import Interfaces.LevelInformation;
+import Interfaces.Sprite;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * DirectHit class - contains the DirectHit constructor and methods and
+ * implements the LevelInformation interface.
+ */
+public class DirectHit
+        implements LevelInformation {
+    @Override public int numberOfBalls() {
+        return 1;
+    }
+
+    @Override public List<Velocity> initialBallVelocities() {
+        List<Velocity> velocities = new ArrayList<>();
+        for (int i = 1; i <= this.numberOfBalls(); i++) {
+            velocities.add(new Velocity(0, -5));
+        }
+        return velocities;
+    }
+
+    @Override public int paddleSpeed() {
+        return 5;
+    }
+
+    @Override public int paddleWidth() {
+        return 100;
+    }
+
+    @Override public String levelName() {
+        return "Direct Hit";
+    }
+
+    @Override public Sprite getBackground() {
+        return new Block(new Rectangle(new Point(0, 0), 800, 600),
+                Color.black);
+    }
+
+    @Override public List<Block> blocks() {
+        List<Block> blocks = new ArrayList<>();
+        Rectangle r = new Rectangle(new Point(400, 200), 30, 30);
+        blocks.add(new Block(r, Color.red));
+        return blocks;
+    }
+
+    @Override public int numberOfBlocksToRemove() {
+        return 1;
+    }
+}

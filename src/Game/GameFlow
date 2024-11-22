@@ -1,0 +1,80 @@
+// Bar Wanunu 209422435
+
+package Game;
+
+import GameAddsOn.AnimationRunner;
+import Screens.GameOver;
+import Screens.KeyPressStoppableAnimation;
+import Screens.YouWin;
+import Geometry.Counter;
+import Interfaces.LevelInformation;
+import biuoop.GUI;
+import biuoop.KeyboardSensor;
+
+import java.util.List;
+
+/**
+ * GameFlow class - contains the game flow constructor and methods.
+ */
+public class GameFlow {
+
+    // Fields
+
+    private AnimationRunner ar;
+    private KeyboardSensor ks;
+    private Counter score;
+    private GUI gui;
+    private boolean flag;
+
+
+    // Constructor
+
+    /**
+     * Creating a new Game Flow object.
+     *
+     * @param ar  - an animation runner
+     * @param ks  - a keyboard sensor
+     * @param gui - a gui
+     */
+    public GameFlow(AnimationRunner ar, KeyboardSensor ks, GUI gui) {
+        this.ar = ar;
+        this.ks = ks;
+        this.score = new Counter();
+        this.gui = gui;
+        this.flag = true;
+    }
+
+    // Methods
+
+    /**
+     * The method runs all the level in the list.
+     *
+     * @param levels - list of levelInformation
+     */
+    public void runLevels(List<LevelInformation> levels) {
+        for (LevelInformation levelInfo : levels) {
+            // creating a new game level
+            GameLevel level = new GameLevel(levelInfo, this.ks, this.ar,
+                    this.score, this.gui);
+            level.initialize();
+            // running until there are no blocks or balls
+            while (level.remainingBlocks() != 0 && level.remainingBalls() > 0) {
+                level.run();
+            }
+            // in case of losing
+            if (level.remainingBalls() == 0) {
+                this.flag = false;
+                // running end screen in case of losing
+                this.ar.run(new KeyPressStoppableAnimation(this.ks,
+                        KeyboardSensor.SPACE_KEY, new GameOver(this.score)));
+                break;
+            }
+        }
+        if (flag) {
+            // running end screen in case of winning
+            this.ar.run(new KeyPressStoppableAnimation(this.ks,
+                    KeyboardSensor.SPACE_KEY, new YouWin(this.score)));
+        }
+        this.gui.close();
+    }
+}

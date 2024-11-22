@@ -1,0 +1,87 @@
+// Bar Wanunu 209422435
+
+package Game;
+
+import CollidableObjects.Block;
+import Geometry.Point;
+import Geometry.Rectangle;
+import Geometry.Velocity;
+import Interfaces.LevelInformation;
+import Interfaces.Sprite;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
+import static Geometry.Velocity.fromAngleAndSpeed;
+
+/**
+ * WideEasy class - contains the WideEasy constructor and methods and
+ * implements the LevelInformation interface.
+ */
+public class WideEasy
+        implements LevelInformation {
+
+    private static final int BLOCK_WIDTH = 50;
+    private static final int BLOCK_HEIGHT = 25;
+
+    @Override public int numberOfBalls() {
+        return 10;
+    }
+
+    @Override public List<Velocity> initialBallVelocities() {
+        List<Velocity> velocities = new ArrayList<>();
+        /*
+         using speed and angle to create a rainbow of the balls from the
+         starting point
+         */
+        double speed = 5;
+        double angle = 110;
+        for (int i = 0; i < this.numberOfBalls(); i++) {
+            velocities.add(fromAngleAndSpeed(angle, speed));
+            // adding 15 to the angle each iteration
+            angle += 15;
+        }
+        return velocities;
+    }
+
+    @Override public int paddleSpeed() {
+        return 1;
+    }
+
+    @Override public int paddleWidth() {
+        return 600;
+    }
+
+    @Override public String levelName() {
+        return "Wide Easy";
+    }
+
+    @Override public Sprite getBackground() {
+        return new Block(new Rectangle(new Point(0, 0), 800, 600),
+                Color.cyan);
+    }
+
+    @Override public List<Block> blocks() {
+        // initial x value for the block
+        int xValue = 775;
+        List<Block> blocks = new ArrayList<>();
+        // creating an array of colors for the blocks
+        Color[] colors = {Color.cyan, Color.cyan, Color.PINK, Color.PINK,
+                Color.blue, Color.blue, Color.green, Color.green, Color.green,
+                Color.yellow, Color.yellow, Color.orange, Color.orange,
+                Color.red, Color.red};
+        for (int i = 1; i <= this.numberOfBlocksToRemove(); i++) {
+            Rectangle r = new Rectangle(new Point(xValue - BLOCK_WIDTH,
+                    240 + BLOCK_HEIGHT), BLOCK_WIDTH, BLOCK_HEIGHT);
+            // reducing the width of the block from the x value
+            xValue -= BLOCK_WIDTH;
+            blocks.add(new Block(r, colors[i - 1]));
+        }
+        return blocks;
+    }
+
+    @Override public int numberOfBlocksToRemove() {
+        return 15;
+    }
+}

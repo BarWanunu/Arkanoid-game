@@ -1,0 +1,80 @@
+// Bar Wanunu 209422435
+
+package Game;
+
+import CollidableObjects.Block;
+import Geometry.Point;
+import Geometry.Rectangle;
+import Geometry.Velocity;
+import Interfaces.LevelInformation;
+import Interfaces.Sprite;
+
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * TheBossLevel class - contains the TheBossLevel constructor and methods and
+ * implements the LevelInformation interface.
+ */
+public class TheBossLevel
+        implements LevelInformation {
+
+    private static final int BLOCK_WIDTH = 60;
+    private static final int BLOCK_HEIGHT = 25;
+    private static final int NUM_BLOCKS = 11;
+    private static final int NUM_ROWS = 5;
+
+    @Override public int numberOfBalls() {
+        return 2;
+    }
+
+    @Override public List<Velocity> initialBallVelocities() {
+        List<Velocity> velocities = new ArrayList<>();
+        for (int i = 1; i <= this.numberOfBalls(); i++) {
+            /* creating a list of velocities that for the even numbers it'll
+            be positive and for the odd negative, so they'll spread apart
+             */
+            velocities.add(new Velocity(Math.pow(-1, i) * 3, -4));
+        }
+        return velocities;
+    }
+
+    @Override public int paddleSpeed() {
+        return 5;
+    }
+
+    @Override public int paddleWidth() {
+        return 100;
+    }
+
+    @Override public String levelName() {
+        return "The Boss Level";
+    }
+
+    @Override public Sprite getBackground() {
+        return new Block(new Rectangle(new Point(0, 0), 800, 600),
+               new Color(0, 102, 0));
+    }
+
+    @Override public List<Block> blocks() {
+        List<Block> blocks = new ArrayList<>();
+        // creating an array of colors for the blocks
+        Color[] colors = {Color.gray, Color.red, Color.yellow, Color.blue,
+                Color.white};
+        for (int i = 1; i <= NUM_ROWS; i++) {
+            for (int j = 1; j <= NUM_BLOCKS - i; j++) {
+                // creating the blocks
+                Rectangle r = new Rectangle(new Point(775 - BLOCK_WIDTH * j,
+                        100 + BLOCK_HEIGHT * i), BLOCK_WIDTH, BLOCK_HEIGHT);
+                // adding the blocks for the game
+                blocks.add(new Block(r, colors[i - 1]));
+            }
+        }
+        return blocks;
+    }
+
+    @Override public int numberOfBlocksToRemove() {
+        return 0;
+    }
+}

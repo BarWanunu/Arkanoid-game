@@ -83,7 +83,8 @@ The numbers correspond to levels: 1 (Direct Hit), 2 (Wide Easy), and 3 (The Boss
 
 Controls
 
--> : Left Arrow: Move the paddle to the left.
+-> : Left Arrow: Move the paddle
+e to the left.
 
 <- : Right Arrow: Move the paddle to the right.
 
@@ -92,4 +93,6 @@ P: Pause the game.
 Space: Exit the game after a win or loss.
 
 ### Photos :
-
+![1](https://github.com/user-attachments/assets/c1895001-af0b-4b08-ae85-3a79b2bfc10e)
+![2](https://github.com/user-attachments/assets/f4d86bb0-a63c-4849-80c2-0ae0624ee13f)
+![3](https://github.com/user-attachments/assets/9ae2398e-665b-41f3-9e39-2ca1afe079b5)

@@ -50,21 +50,21 @@ Compilation and Execution
 
 Installing Apache Ant
 
-1. Download Apache Ant from the official website.
+1. Download Apache Ant from the [official website](https://ant.apache.org/bindownload.cgi).
 
-     * Extract the downloaded archive to a directory (e.g., C:\apache-ant-1.10.13).
+     * Extract the downloaded archive to a directory (e.g., `C:\apache-ant-1.10.13`).
 
 2. Configure environment variables:
 
-    * Set ANT_HOME to the Ant directory (e.g., C:\apache-ant-1.10.13).
+    * Set `ANT_HOME` to the Ant directory (e.g., `C:\apache-ant-1.10.13`).
 
-    * Add %ANT_HOME%\bin to your system PATH variable.
+    * Add `%ANT_HOME%\bin` to your system `PATH` variable.
 
-3. Verify the installation by running ant -version in the Command Prompt.
+3. Verify the installation by running `ant -version` in the Command Prompt.
 
 ### Build and Run the Game
 
-The project includes a build.xml file to simplify compilation and execution.
+The project includes a `build.xml` file to simplify compilation and execution.
 
 ### Compile the Project:
 ```bash

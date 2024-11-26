@@ -52,13 +52,13 @@ Installing Apache Ant
 
 1. Download Apache Ant from the official website.
 
-   * Extract the downloaded archive to a directory (e.g., C:\apache-ant-1.10.13).
+     * Extract the downloaded archive to a directory (e.g., C:\apache-ant-1.10.13).
 
 2. Configure environment variables:
 
-  * Set ANT_HOME to the Ant directory (e.g., C:\apache-ant-1.10.13).
+    * Set ANT_HOME to the Ant directory (e.g., C:\apache-ant-1.10.13).
 
-  * Add %ANT_HOME%\bin to your system PATH variable.
+    * Add %ANT_HOME%\bin to your system PATH variable.
 
 3. Verify the installation by running ant -version in the Command Prompt.
 

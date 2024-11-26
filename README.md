@@ -6,7 +6,7 @@ This project is a modern implementation of the classic Arkanoid game, developed 
 
 ## Features
 
-## Core Gameplay Mechanics
+### Core Gameplay Mechanics
 
 - **Paddle Control:** Players can maneuver the paddle using the keyboard's left and right arrow keys, providing control to deflect the ball.
 
@@ -14,9 +14,7 @@ This project is a modern implementation of the classic Arkanoid game, developed 
 
 - **Brick Interaction:** Bricks are designed to shatter upon impact.
 
-## Game Levels
-
-#### Diverse Themes: The game includes unique levels such as Direct Hit, Wide Easy, and The Boss Level. Each level has its distinctive design, decorations, and challenges.
+### Game Levels
 
 - **Direct Hit:** A simple level with a single target brick.
 
@@ -25,6 +23,8 @@ This project is a modern implementation of the classic Arkanoid game, developed 
 - **The Boss Level:** A dramatic and visually rich level with building-like decorations and multiple obstacles.
 
 - **Dynamic Progression:** Levels can be played in a specified sequence or in the default order if no preferences are provided.
+
+#### Diverse Themes: The game includes unique levels such as Direct Hit, Wide Easy, and The Boss Level. Each level has its distinctive design, decorations, and challenges.
 
 Visual and Functional Enhancements
 

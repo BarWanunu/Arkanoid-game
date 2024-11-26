@@ -16,7 +16,7 @@ This project is a modern implementation of the classic Arkanoid game, developed 
 
 ## Game Levels
 
-## Diverse Themes:## The game includes unique levels such as Direct Hit, Wide Easy, and The Boss Level. Each level has its distinctive design, decorations, and challenges.
+#### Diverse Themes: The game includes unique levels such as Direct Hit, Wide Easy, and The Boss Level. Each level has its distinctive design, decorations, and challenges.
 
 - **Direct Hit:** A simple yet challenging level with a single target surrounded by concentric decorations.
 

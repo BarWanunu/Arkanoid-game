@@ -22,8 +22,6 @@ This project is a modern implementation of the classic Arkanoid game, developed 
 
 - **The Boss Level:** A dramatic and visually rich level with building-like decorations and multiple obstacles.
 
-- **Dynamic Progression:** Levels can be played in a specified sequence or in the default order if no preferences are provided.
-
 ### Visual and Functional Enhancements
 
 - **Score tracking:** The game keeps track of the player score. It changes dynamically both after a brick hit and a level completion.
@@ -36,9 +34,9 @@ This project is a modern implementation of the classic Arkanoid game, developed 
 
     - **Game Over Screen:** Displays the final score when the ball touches the ground and the game ends.
 
-Custom Decorations
+- **Custom Decorations:**
 
-Each level incorporates thematic decorations, such as sun rays in Wide Easy or intricate building designs in The Boss Level, enhancing the visual appeal of the game.
+    - Each level incorporates thematic decorations, such as sun rays in Wide Easy or intricate building designs in The Boss Level, enhancing the visual appeal of the game.
 
 ## Compilation and Execution
 
@@ -68,7 +66,7 @@ The project includes a `build.xml` file to simplify compilation and execution.
 ```bash
 ant compile
 ```
-Run the Game:
+Run the Game by deafult levels order:
 ```bash
 ant run
 ```

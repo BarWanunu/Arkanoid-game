@@ -6,7 +6,7 @@ This project is a modern implementation of the classic Arkanoid game, developed 
 
 ## Features
 
-- Core Gameplay Mechanics
+## Core Gameplay Mechanics
 
 - **Paddle Control:** Players can maneuver the paddle using the keyboard's left and right arrow keys, providing control to deflect the ball.
 
@@ -30,7 +30,7 @@ Visual and Functional Enhancements
 
 - **Score tracking:** The game keeps track of the player score. It changes dynamically both after a brick hit and a level completion.
 
-## Game States:
+## Game States
 
 - **Pause Screen:** Players can pause the game at any time by pressing the "P" key, with a clear message displayed.
 

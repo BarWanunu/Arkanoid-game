@@ -2,23 +2,23 @@
 
 ## Overview
 
-This project is a modern implementation of the classic Arkanoid game, developed in Java as part of an Object-Oriented Programming course at Bar Ilan University. The game offers an engaging gameplay experience where players control a paddle to prevent a ball from falling while attempting to break all the bricks on the screen. With several innovative features and polished design, this version of Arkanoid enhances the timeless gaming formula.
+This project is a modern implementation of the classic Arkanoid game, developed in Java as part of an Object-Oriented Programming course at Bar Ilan University. The game offers an engaging gameplay experience where players control a paddle to prevent a ball from falling while attempting to break all the bricks on the screen.
 
 ## Features
 
 - Core Gameplay Mechanics
 
-- **Paddle Control:** Players can maneuver the paddle using the keyboard's left and right arrow keys, providing precise control to deflect the ball.
+- **Paddle Control:** Players can maneuver the paddle using the keyboard's left and right arrow keys, providing control to deflect the ball.
 
 - **Ball Dynamics:** The ball features realistic physics, bouncing off bricks, walls, and the paddle at angles that depend on impact position.
 
-- **Brick Interaction:** Bricks are designed to shatter upon impact, with certain levels featuring bricks that require multiple hits to break.
+- **Brick Interaction:** Bricks are designed to shatter upon impact.
 
 ## Game Levels
 
 #### Diverse Themes: The game includes unique levels such as Direct Hit, Wide Easy, and The Boss Level. Each level has its distinctive design, decorations, and challenges.
 
-- **Direct Hit:** A simple yet challenging level with a single target surrounded by concentric decorations.
+- **Direct Hit:** A simple level with a single target brick.
 
 - **Wide Easy:** Features a wide paddle and a decorative sun-themed background.
 
@@ -28,7 +28,7 @@ This project is a modern implementation of the classic Arkanoid game, developed 
 
 Visual and Functional Enhancements
 
-- **Score Tracking:** A scoring system keeps players motivated, displaying the current score on the game screens.
+- **Score tracking:** The game keeps track of the player score. It changes dynamically both after a brick hit and a level completion.
 
 ## Game States:
 

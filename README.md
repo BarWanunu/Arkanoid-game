@@ -28,7 +28,7 @@ This project is a modern implementation of the classic Arkanoid game, developed 
 
 - **Score tracking:** The game keeps track of the player score. It changes dynamically both after a brick hit and a level completion.
 
-- **Game States**
+- **Game States:**
 
     - **Pause Screen:** Players can pause the game at any time by pressing the "P" key, with a clear message displayed.
 

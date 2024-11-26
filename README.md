@@ -24,27 +24,25 @@ This project is a modern implementation of the classic Arkanoid game, developed 
 
 - **Dynamic Progression:** Levels can be played in a specified sequence or in the default order if no preferences are provided.
 
-#### Diverse Themes: The game includes unique levels such as Direct Hit, Wide Easy, and The Boss Level. Each level has its distinctive design, decorations, and challenges.
-
-Visual and Functional Enhancements
+### Visual and Functional Enhancements
 
 - **Score tracking:** The game keeps track of the player score. It changes dynamically both after a brick hit and a level completion.
 
-## Game States
+- **Game States**
 
-- **Pause Screen:** Players can pause the game at any time by pressing the "P" key, with a clear message displayed.
+    - **Pause Screen:** Players can pause the game at any time by pressing the "P" key, with a clear message displayed.
 
-- **Win Screen:** A celebratory screen showcases the player’s score upon successfully completing all levels.
+    - **Win Screen:** A celebratory screen showcases the player’s score upon successfully completing all levels.
 
-- **Game Over Screen:** Displays the final score when the ball touches the ground and the game ends.
+    - **Game Over Screen:** Displays the final score when the ball touches the ground and the game ends.
 
 Custom Decorations
 
 Each level incorporates thematic decorations, such as sun rays in Wide Easy or intricate building designs in The Boss Level, enhancing the visual appeal of the game.
 
-Compilation and Execution
+## Compilation and Execution
 
-## Prerequisites
+### Prerequisites
 
 ### Apache Ant: The project uses Apache Ant for building and running the game.
 
@@ -81,7 +79,7 @@ ant -Dargs="1 2 3" run
 ```
 The numbers correspond to levels: 1 (Direct Hit), 2 (Wide Easy), and 3 (The Boss Level).
 
-Controls
+## Controls
 
 -> : Left Arrow: Move the paddle
 e to the left.

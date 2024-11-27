@@ -2,17 +2,17 @@
 
 ## Overview
 
-This project is a modern implementation of the classic Arkanoid game, developed in Java as part of an Object-Oriented Programming course at Bar Ilan University. The game offers an engaging gameplay experience where players control a paddle to prevent a ball from falling while attempting to break all the bricks on the screen.
+This project is a modern implementation of the classic Arkanoid game, developed in Java as part of an Object-Oriented Programming course at Bar-Ilan University. The game offers an engaging gameplay experience where players control a paddle to prevent a ball from falling while attempting to break all the bricks on the screen.
 
 ## Features
 
 ### Core Gameplay Mechanics
 
-- **Paddle Control:** Players can maneuver the paddle using the keyboard's left and right arrow keys, providing control to deflect the ball.
+- **Paddle Control:** Players can maneuver the paddle using the keyboard's left and right arrow keys to deflect the ball.
 
-- **Ball Dynamics:** The ball features realistic physics, bouncing off bricks, walls, and the paddle at angles that depend on impact position.
+- **Ball Dynamics:** The ball features realistic physics, bouncing off bricks, walls, and the paddle at angles that depend on the point of impact.
 
-- **Brick Interaction:** Bricks are designed to shatter upon impact.
+- **Brick Interaction:** Bricks shatter upon impact.
 
 ### Game Levels
 
@@ -24,15 +24,15 @@ This project is a modern implementation of the classic Arkanoid game, developed 
 
 ### Visual and Functional Enhancements
 
-- **Score tracking:** The game keeps track of the player score. It changes dynamically both after a brick hit and a level completion.
+- **Score Tracking:** The game dynamically updates the player’s score after each brick hit and level completion.
 
 - **Game States:**
 
     - **Pause Screen:** Players can pause the game at any time by pressing the "P" key, with a clear message displayed.
 
-    - **Win Screen:** A celebratory screen showcases the player’s score upon successfully completing all levels.
+    - **Win Screen:** A celebratory screen displays the player’s score upon successfully completing all levels.
 
-    - **Game Over Screen:** Displays the final score when the ball touches the ground and the game ends.
+    - **Game Over Screen:** Displays the final score when the ball touches the ground, and the game ends.
 
 - **Custom Decorations:**
 
@@ -79,10 +79,9 @@ The numbers correspond to levels: 1 (Direct Hit), 2 (Wide Easy), and 3 (The Boss
 
 ## Controls
 
--> : Left Arrow: Move the paddle
-e to the left.
+Left Arrow (<-): Move the paddle to the left.
 
-<- : Right Arrow: Move the paddle to the right.
+Right Arrow (->): Move the paddle to the right.
 
 P: Pause the game.
 
